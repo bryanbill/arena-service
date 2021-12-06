@@ -29,6 +29,7 @@
     "better-sqlite3": "~7.1.2",
     "pg": "^8.7.1",
     "source-map-support": "~0.5.19",
+    "striptags": "^3.2.0",
     "typeorm": "0.2.26"
   },
   "devDependencies": {
