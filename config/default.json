@@ -3,15 +3,37 @@
   "settings": {
     "loggerFormat": "tiny",
     "session": {
-      "store": "@foal/typeorm"
+      "store": "@foal/typeorm",
+      "csrf": {
+        "enabled": true
+      }
+    },
+    "disk": {
+      "driver": "local",
+      "local": {
+        "directory": "uploads"
+      }
+    },
+    "jwt": {
+      "secret": "+62abiS1hpdvHdNjgzS6SG+i8alqyjtZUQj97FxS6CI=",
+      "secretEncoding": "base64",
+      "cookie": {
+        "name": "soloo_arena",
+        "domain": "localhost",
+        "httpOnly": true,
+        "path": "/",
+        "sameSite": "strict",
+        "secure": false
+      }
     }
   },
   "database": {
-    "type": "mysql",
+    "type": "cockroachdb",
     "host": "env(DB_HOST)",
     "port": "env(DB_PORT)",
     "username": "env(DB_USERNAME)",
     "password": "env(DB_PASSWORD)",
     "database": "env(DB_NAME)"
-  }
+  },
+  "version": "env(VERSION)"
 }

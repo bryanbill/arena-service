@@ -25,9 +25,12 @@
   },
   "dependencies": {
     "@foal/core": "^2.0.0",
+    "@foal/jwt": "^2.6.0",
+    "@foal/swagger": "^2.6.0",
     "@foal/typeorm": "^2.0.0",
     "axios": "^0.24.0",
     "better-sqlite3": "~7.1.2",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.1",
     "source-map-support": "~0.5.19",
     "striptags": "^3.2.0",
