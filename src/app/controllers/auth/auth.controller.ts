@@ -29,6 +29,7 @@ export class AuthController {
         id: res.id,
         sub: res.id.toString(),
         username: engineUser.data.username,
+        projectId: res.projectId,
       });
 
       const response = new HttpResponseOK({

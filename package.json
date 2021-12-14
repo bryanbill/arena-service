@@ -31,6 +31,7 @@
     "axios": "^0.24.0",
     "better-sqlite3": "~7.1.2",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
     "pg": "^8.7.1",
     "source-map-support": "~0.5.19",
     "striptags": "^3.2.0",

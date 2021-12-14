@@ -10,6 +10,7 @@ import {
   HttpResponseOK,
 } from "@foal/core";
 import { AuthController } from "./auth";
+import { ProjectsController } from "./projects";
 import { UsersController } from "./users";
 
 @ApiInfo({
@@ -21,7 +22,8 @@ import { UsersController } from "./users";
 })
 export class ApiController {
   subControllers = [
-    controller("/users", UsersController),
+    controller("/user", UsersController),
     controller("/auth", AuthController),
+    controller("/project", ProjectsController),
   ];
 }
