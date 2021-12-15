@@ -1,25 +1,25 @@
 export enum IssueType {
-  Bug = "Bug",
-  Feature = "Feature",
-  Task = "Task",
-  STORY = "STORY",
-  EPIC = "EPIC",
-  OTHER = "OTHER",
+  BUG = "bug",
+  FEATURE = "feature",
+  TASK = "task",
+  STORY = "story",
+  EPIC = "epic",
+  OTHER = "other",
 }
 
 export enum IssueStatus {
-  BACKLOG = "BACKLOG",
-  INPROGRESS = "IN_PROGRESS",
-  DONE = "DONE",
-  REJECTED = "REJECTED",
-  CANCELED = "CANCELED",
-  SELECTED = "SELECTED",
+  BACKLOG = "backlog",
+  INPROGRESS = "inprogress",
+  DONE = "done",
+  REJECTED = "rejected",
+  CANCELED = "canceled",
+  SELECTED = "selected",
 }
 
 export enum IssuePriority {
-  CRITICAL = "5",
+  HIGHEST = "5",
   HIGH = "4",
   MEDIUM = "3",
   LOW = "2",
-  NONE = "1",
+  LOWEST = "1",
 }

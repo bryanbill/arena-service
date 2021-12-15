@@ -3,6 +3,7 @@ import {
   Context,
   Get,
   HttpResponseBadRequest,
+  HttpResponseNoContent,
   HttpResponseOK,
   Post,
   Put,
@@ -10,6 +11,8 @@ import {
 } from "@foal/core";
 import { JWTRequired } from "@foal/jwt";
 import { fetchUser } from "@foal/typeorm";
+import { create } from "domain";
+import { In } from "typeorm";
 import { Project, User } from "../../entities";
 import { issuePartial } from "../../helpers/utils/serializers/issues";
 import {
@@ -24,13 +27,34 @@ export class ProjectsController {
   @Get("/")
   async getProject(ctx: Context) {
     try {
-      const project = await findEntityOrThrow(Project, ctx.user.projectId, {
-        relations: ["users", "issues"],
-      });
+      if (ctx.user.projectid) {
+        const project = await findEntityOrThrow(Project, ctx.user.projectId, {
+          relations: ["users", "issues"],
+        });
+        return new HttpResponseOK({
+          project: {
+            ...project,
+            issues:
+              project.issues.length > 0 ? project.issues.map(issuePartial) : [],
+          },
+        });
+      }
+      ctx.request.body = {
+        name: "Project",
+        description: "Projection",
+        url: "https://test.pro",
+        category: "Software",
+      };
+      const payload = {
+        ...ctx.request.body,
+        users: [await User.findOne(ctx.user.id)],
+      };
+      const project = await createEntity(Project, payload);
       return new HttpResponseOK({
         project: {
           ...project,
-          issues: project.issues.map(issuePartial),
+          issues:
+            project.issues? project.issues.map(issuePartial) : [],
         },
       });
     } catch (err) {
@@ -76,12 +100,17 @@ export class ProjectsController {
 
   @Put("/")
   async updateProject(ctx: Context) {
-    const project = await updateEntity(
-      Project,
-      ctx.user.projectId,
-      ctx.request.body
-    );
+    try {
+      const project = await updateEntity(
+        Project,
+        ctx.user.projectId,
+        ctx.request.body
+      );
 
-    return new HttpResponseOK(project);
+      return new HttpResponseOK(project);
+    } catch (err) {
+      console.log(err);
+      return new HttpResponseBadRequest();
+    }
   }
 }

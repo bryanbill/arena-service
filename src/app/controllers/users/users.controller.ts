@@ -13,4 +13,10 @@ export class UsersController {
 
     return new HttpResponseOK(user);
   }
+  @Get("/all")
+  async getUsers(ctx: Context) {
+    const user = await User.find();
+
+    return new HttpResponseOK(user);
+  }
 }

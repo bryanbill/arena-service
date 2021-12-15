@@ -45,7 +45,7 @@ export class IssuesController {
   }
 
   @Get("/:id")
-  @ValidatePathParam("id", new Issue())
+  @ValidatePathParam("id", {})
   async getIssueWithUsersAndComments(ctx: Context) {
     const issue = await findEntityOrThrow(Issue, ctx.request.params.id, {
       relations: ["users", "comments", "comments.user"],
@@ -55,25 +55,15 @@ export class IssuesController {
 
   @Post("/")
   @ValidateBody({
-    properties: {
-      title: { type: "string" },
-      type: { type: "string" },
-      status: { type: "string" },
-      priority: { type: "string" },
-      description: { type: "string" },
-      estimate: { type: "number" },
-      timeSpent: { type: "number" },
-      reporterId: { type: "number" },
-      projectId: { type: "number" },
-      users: { type: "array", items: { type: "number" } },
-    },
+    properties: {},
   })
   async createIssue(ctx: Context) {
     try {
+      console.log(ctx.request.body);
       // get user object for each user id
       let users: User[] = [];
       for (let i = 0; i < ctx.request.body.users.length; i++) {
-        users.push(await findEntityOrThrow(User, ctx.request.body.users[i]));
+        users.push(await findEntityOrThrow(User, ctx.request.body.userIds[i]));
       }
 
       // get project object for the project id
@@ -106,7 +96,7 @@ export class IssuesController {
   }
 
   @Put("/:id")
-  @ValidatePathParam("id", new Issue())
+  @ValidatePathParam("id", {})
   @ValidateBody({
     properties: {},
   })
@@ -120,7 +110,7 @@ export class IssuesController {
   }
 
   @Delete("/:id")
-  @ValidatePathParam("id", new Issue())
+  @ValidatePathParam("id", {})
   async deleteIssue(ctx: Context) {
     const issue = await deleteEntity(Issue, ctx.request.params.issueId);
     return new HttpResponseOK(issue);
