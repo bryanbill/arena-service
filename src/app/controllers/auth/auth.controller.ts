@@ -13,13 +13,28 @@ export class AuthController {
   @Get("/")
   async create(ctx: Context) {
     try {
-      const cookie_value = ctx.request.cookies["soloo"];
-
+     
       const engineUser = await axios.get("http://localhost:4040/v1/users", {
-        headers: { Authorization: `Bearer ${cookie_value}` },
+        });
+      // check if user exists in arena
+      const thisuser = await User.findOne({
+        where: {
+          id: engineUser.data.id,
+        },
       });
-
       const user = new User();
+      if (thisuser) {
+        await User.update(
+          {
+            id: engineUser.data.id,
+          },
+          {
+            name: engineUser.data.name,
+            email: engineUser.data.email,
+          }
+        );
+        return new HttpResponseOK();
+      }
       user.id = engineUser.data.id;
       user.name = engineUser.data.name;
       user.email = engineUser.data.email;

@@ -23,7 +23,7 @@ const entities: { [key: string]: EntityConstructor } = {
 
 export const findEntityOrThrow = async <T extends EntityConstructor>(
   Constructor: T,
-  id: number | string,
+  id: number | string, 
   options?: FindOneOptions
 ): Promise<InstanceType<T>> => {
   const instance = await Constructor.findOne(id, options);

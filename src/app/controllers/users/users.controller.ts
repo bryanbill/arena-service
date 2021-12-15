@@ -10,6 +10,7 @@ export class UsersController {
   @Get("/")
   async getUser(ctx: Context) {
     const user = await User.findOne(ctx.user.id);
+
     return new HttpResponseOK(user);
   }
 }

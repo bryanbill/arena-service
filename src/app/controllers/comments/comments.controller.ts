@@ -1,4 +1,5 @@
 import {
+  ApiUseTag,
   Context,
   Delete,
   Get,
@@ -17,6 +18,7 @@ import {
   updateEntity,
 } from "../../helpers/utils/typeorm";
 
+@ApiUseTag("Comments")
 @JWTRequired({ cookie: true, user: fetchUser(User) })
 export class CommentsController {
   @Get("/")
@@ -44,7 +46,7 @@ export class CommentsController {
   }
 
   @Put("/:id")
-  @ValidatePathParam("id", Comment)
+  @ValidatePathParam("id", new Comment())
   @ValidateBody({
     properties: {},
   })
@@ -57,7 +59,7 @@ export class CommentsController {
     return new HttpResponseOK(comment);
   }
   @Delete("/:id")
-  @ValidatePathParam("id", Comment)
+  @ValidatePathParam("id", new Comment())
   async deleteComment(ctx: Context) {
     const comment = await deleteEntity(Comment, ctx.request.params.id);
     return new HttpResponseOK(comment);
