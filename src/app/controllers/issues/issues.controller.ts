@@ -50,7 +50,11 @@ export class IssuesController {
     const issue = await findEntityOrThrow(Issue, ctx.request.params.id, {
       relations: ["users", "comments", "comments.user"],
     });
-    return new HttpResponseOK(issue);
+    const rissue = {
+      ...issue,
+      descriptionText: "Test"
+    }
+    return new HttpResponseOK({issue:rissue});
   }
 
   @Post("/")
@@ -112,7 +116,7 @@ export class IssuesController {
   @Delete("/:id")
   @ValidatePathParam("id", {})
   async deleteIssue(ctx: Context) {
-    const issue = await deleteEntity(Issue, ctx.request.params.issueId);
+    const issue = await deleteEntity(Issue, ctx.request.params.id);
     return new HttpResponseOK(issue);
   }
   calculateListPosition = async ({

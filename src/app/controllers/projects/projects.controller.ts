@@ -27,7 +27,7 @@ export class ProjectsController {
   @Get("/")
   async getProject(ctx: Context) {
     try {
-      if (ctx.user.projectid) {
+      if (ctx.user.projectId) {
         const project = await findEntityOrThrow(Project, ctx.user.projectId, {
           relations: ["users", "issues"],
         });
